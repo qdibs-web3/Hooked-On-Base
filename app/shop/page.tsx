@@ -83,7 +83,7 @@ export default function ShopPage() {
           className="text-center space-y-8 max-w-md"
         >
           <h1 className="text-4xl font-bold text-gray-800">
-            🏪 Fishing Rod Shop
+            Fishing Rod Shop
           </h1>
           <p className="text-gray-600">
             Connect your wallet to browse and purchase fishing rods!
@@ -120,7 +120,7 @@ export default function ShopPage() {
             animate={{ opacity: 1, x: 0 }}
             className="text-4xl font-bold text-gray-800"
           >
-            🏪 Fishing Rod Shop
+            Fishing Rod Shop
           </motion.h1>
           <ConnectButton />
         </div>
@@ -129,11 +129,35 @@ export default function ShopPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-2xl p-6 shadow-lg"
+          className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-2xl p-4 shadow-lg"
         >
           <p className="text-sm opacity-90">Your Balance</p>
           <p className="text-4xl font-bold">{formatHook(user.hookBalance)}</p>
           <p className="text-sm mt-2 opacity-90">Level {user.level}</p>
+        </motion.div>
+        {/* Info */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white rounded-2xl p-4 shadow-lg"
+        >
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            About Fishing Rods
+          </h2>
+          <div className="space-y-3 text-gray-600">
+            <p>
+              <strong className="text-gray-800">Catch Rate Bonus:</strong> Increases your overall chance of catching a fish when you cast.
+            </p>
+            <p>
+              <strong className="text-gray-800">Rare Bonus:</strong> Increases your chance of catching rare, epic, legendary, and mythic fish.
+            </p>
+            <p>
+              <strong className="text-gray-800">XP Multiplier:</strong> Multiplies the XP you earn from each fish caught.
+            </p>
+            <p className="text-sm italic">
+              💡 Tip: Save up for higher tier rods to maximize your earnings and catch legendary fish!
+            </p>
+          </div>
         </motion.div>
 
         {/* Rods Grid */}
@@ -256,31 +280,6 @@ export default function ShopPage() {
             );
           })}
         </div>
-
-        {/* Info */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl p-6 shadow-lg"
-        >
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            About Fishing Rods
-          </h2>
-          <div className="space-y-3 text-gray-600">
-            <p>
-              <strong className="text-gray-800">Catch Rate Bonus:</strong> Increases your overall chance of catching a fish when you cast.
-            </p>
-            <p>
-              <strong className="text-gray-800">Rare Bonus:</strong> Increases your chance of catching rare, epic, legendary, and mythic fish.
-            </p>
-            <p>
-              <strong className="text-gray-800">XP Multiplier:</strong> Multiplies the XP you earn from each fish caught.
-            </p>
-            <p className="text-sm italic">
-              💡 Tip: Save up for higher tier rods to maximize your earnings and catch legendary fish!
-            </p>
-          </div>
-        </motion.div>
       </div>
     </div>
   );

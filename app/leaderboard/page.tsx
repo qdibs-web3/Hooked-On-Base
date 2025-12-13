@@ -57,7 +57,7 @@ export default function LeaderboardPage() {
             animate={{ opacity: 1, x: 0 }}
             className="text-4xl font-bold text-gray-800"
           >
-            🏆 Leaderboard
+            Leaderboard
           </motion.h1>
           {isConnected && <ConnectButton />}
         </div>
@@ -229,10 +229,10 @@ export default function LeaderboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-2xl p-6 shadow-lg"
+          className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-2xl p-6 shadow-lg"
         >
           <h2 className="text-2xl font-bold mb-2">
-            🏆 Compete for Glory!
+             Compete for Glory!
           </h2>
           <p>
             Catch more fish, earn more XP, and climb the leaderboard to prove you're the ultimate angler!

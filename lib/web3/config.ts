@@ -9,7 +9,7 @@ export const config = createConfig({
       target: 'metaMask',
     }),
     coinbaseWallet({
-      appName: 'Hooked - Fishing Game',
+      appName: 'Hooked - Base Fishing Game',
       appLogoUrl: '/logo.png',
     }),
   ],

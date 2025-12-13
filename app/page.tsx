@@ -46,7 +46,7 @@ export default function DashboardPage() {
 
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div className="bg-white/50 rounded-lg p-4">
-              <p className="font-bold text-2xl">20</p>
+              <p className="font-bold text-2xl">69</p>
               <p className="text-gray-600">Fish Species</p>
             </div>
             <div className="bg-white/50 rounded-lg p-4">
@@ -93,7 +93,7 @@ export default function DashboardPage() {
             animate={{ opacity: 1, x: 0 }}
             className="text-4xl font-bold text-gray-800"
           >
-            🎣 Dashboard
+            Dashboard
           </motion.h1>
           <ConnectButton />
         </div>

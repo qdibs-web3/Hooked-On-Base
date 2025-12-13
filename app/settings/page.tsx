@@ -39,7 +39,7 @@ export default function SettingsPage() {
           className="text-center space-y-8 max-w-md"
         >
           <h1 className="text-4xl font-bold text-gray-800">
-            ⚙️ Settings
+            Settings
           </h1>
           <p className="text-gray-600">
             Connect your wallet to access settings!
@@ -76,7 +76,7 @@ export default function SettingsPage() {
             animate={{ opacity: 1, x: 0 }}
             className="text-4xl font-bold text-gray-800"
           >
-            ⚙️ Settings
+            Settings
           </motion.h1>
           <ConnectButton />
         </div>
@@ -153,11 +153,11 @@ export default function SettingsPage() {
           className="bg-white rounded-2xl p-6 shadow-lg"
         >
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            📊 Account Statistics
+            Account Statistics
           </h2>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div className="bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg p-4">
               <p className="text-sm text-gray-600">Account Age</p>
               <p className="text-2xl font-bold text-purple-700">
                 {Math.floor((Date.now() - new Date(user.createdAt).getTime()) / (1000 * 60 * 60 * 24))} days
@@ -171,28 +171,28 @@ export default function SettingsPage() {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg p-4">
               <p className="text-sm text-gray-600">Success Rate</p>
               <p className="text-2xl font-bold text-green-700">
                 {user.totalCasts > 0 ? Math.round((user.totalFishCaught / user.totalCasts) * 100) : 0}%
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-yellow-100 to-orange-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg p-4">
               <p className="text-sm text-gray-600">Total XP</p>
               <p className="text-2xl font-bold text-yellow-700">
                 {user.xp.toLocaleString()}
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-red-100 to-pink-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg p-4">
               <p className="text-sm text-gray-600">Collection</p>
               <p className="text-2xl font-bold text-red-700">
                 {user.uniqueFishCaught.length}/20
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-indigo-100 to-purple-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg p-4">
               <p className="text-sm text-gray-600">Rods Owned</p>
               <p className="text-2xl font-bold text-indigo-700">
                 {user.ownedRods.length}/9
@@ -211,7 +211,7 @@ export default function SettingsPage() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setShowTokenomics(!showTokenomics)}
-            className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all"
+            className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg text-white font-bold py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all"
           >
             {showTokenomics ? '▼ Hide' : '▶'} $HOOK Tokenomics & Roadmap
           </motion.button>
@@ -228,7 +228,7 @@ export default function SettingsPage() {
           className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-2xl p-6 shadow-lg"
         >
           <h2 className="text-2xl font-bold mb-2">
-            🎣 About Hooked
+            About Hooked
           </h2>
           <p className="mb-4">
             Hooked is a Web3 fishing game built on Base. Cast your line, catch rare fish, 

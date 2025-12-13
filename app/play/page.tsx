@@ -19,7 +19,7 @@ export default function PlayPage() {
           className="text-center space-y-8 max-w-md"
         >
           <h1 className="text-4xl font-bold text-gray-800">
-            🎣 Ready to Fish?
+            Ready to Fish?
           </h1>
           <p className="text-gray-600">
             Connect your wallet to start casting your line!
