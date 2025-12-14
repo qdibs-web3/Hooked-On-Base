@@ -161,7 +161,7 @@ export default function ShopPage() {
         </motion.div>
 
         {/* Rods Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {FISHING_RODS.map((rod, index) => {
             const owned = user.ownedRods.includes(rod.id);
             const equipped = user.currentRodId === rod.id;
