@@ -61,10 +61,16 @@ export function FishingCast({ onCastComplete }: FishingCastProps) {
         // Refresh cooldown status
         await checkCooldown();
         
-        // Notify parent to refresh user data (extended to 8 seconds for longer viewing)
+        // Hide result after 7 seconds
+        setTimeout(() => {
+          setShowResult(false);
+          setResult(null);
+        }, 7000);
+        
+        // Notify parent to refresh user data
         setTimeout(() => {
           onCastComplete();
-        }, 8000);
+        }, 7500);
       } else {
         const error = await response.json();
         setErrorMessage(error.error || 'Failed to cast. Please try again.');
@@ -80,22 +86,22 @@ export function FishingCast({ onCastComplete }: FishingCastProps) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 w-full">
-      {/* Error Message Display */}
+    <>
+      {/* Error Message Display - Fixed to top of screen */}
       <AnimatePresence>
         {errorMessage && (
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="bg-red-100 border-2 border-red-400 text-red-700 px-6 py-3 rounded-lg shadow-lg font-semibold"
+            className="fixed top-24 left-1/2 -translate-x-1/2 z-50 bg-red-100 border-2 border-red-400 text-red-700 px-6 py-3 rounded-lg shadow-lg font-semibold max-w-md"
           >
             ⚠️ {errorMessage}
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Cast Button with Cooldown Timer */}
+      {/* Cast Button - Stays in place */}
       <motion.button
         whileHover={canCast && !casting ? { scale: 1.05 } : {}}
         whileTap={canCast && !casting ? { scale: 0.95 } : {}}
@@ -130,8 +136,7 @@ export function FishingCast({ onCastComplete }: FishingCastProps) {
             <span className="text-lg mb-1">⏰ Cooldown</span>
             <motion.span 
               className="text-4xl font-mono tabular-nums"
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 1, repeat: Infinity }}
+              key={remainingTime}
             >
               {formatTime(remainingTime)}
             </motion.span>
@@ -140,14 +145,14 @@ export function FishingCast({ onCastComplete }: FishingCastProps) {
         )}
       </motion.button>
 
-      {/* Casting Animation */}
+      {/* Casting Animation - Fixed centered overlay */}
       <AnimatePresence>
         {casting && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="text-center bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-xl"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 text-center bg-white/95 backdrop-blur-sm rounded-xl p-8 shadow-2xl"
           >
             <motion.div
               animate={{
@@ -188,23 +193,23 @@ export function FishingCast({ onCastComplete }: FishingCastProps) {
         )}
       </AnimatePresence>
 
-      {/* Result Display */}
+      {/* Result Display - Fixed centered overlay */}
       <AnimatePresence>
         {showResult && result && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.5, y: 50 }}
+            initial={{ opacity: 0, scale: 0.5 }}
             animate={{ 
               opacity: 1, 
-              scale: [0.5, 1.1, 1], 
-              y: 0,
-              rotate: [0, 5, -5, 0]
+              scale: 1
             }}
-            exit={{ opacity: 0, scale: 0.8, y: -20 }}
+            exit={{ opacity: 0, scale: 0.8 }}
             transition={{ 
-              duration: 0.6,
-              scale: { times: [0, 0.6, 1], type: 'spring', stiffness: 200 }
+              duration: 0.5,
+              type: 'spring',
+              stiffness: 200,
+              damping: 15
             }}
-            className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full border-4"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white rounded-2xl shadow-2xl p-8 max-w-md w-[90vw] md:w-full border-4"
             style={{
               borderColor: result.fish
                 ? RARITY_COLORS[result.fish.rarity]
@@ -216,14 +221,15 @@ export function FishingCast({ onCastComplete }: FishingCastProps) {
                 <motion.div
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ 
-                    scale: [0, 1.3, 1],
-                    rotate: [- 180, 10, -10, 0]
+                    scale: 1,
+                    rotate: 0
                   }}
                   transition={{ 
-                    duration: 0.8,
+                    duration: 0.6,
                     delay: 0.3,
                     type: 'spring',
-                    stiffness: 150
+                    stiffness: 150,
+                    damping: 12
                   }}
                   className="text-7xl relative"
                 >
@@ -322,6 +328,6 @@ export function FishingCast({ onCastComplete }: FishingCastProps) {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 }

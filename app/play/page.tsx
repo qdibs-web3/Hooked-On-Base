@@ -315,7 +315,7 @@ export default function PlayPage() {
           </motion.div>
 
           {/* Fishing Cast Component - BOTTOM RIGHT */}
-          <div className="absolute bottom-6 right-6 z-20">
+          <div className="absolute bottom-6 right-6 z-20 w-auto">
             <FishingCast onCastComplete={refreshUser} />
           </div>
         </motion.div>
