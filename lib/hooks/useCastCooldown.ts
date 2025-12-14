@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAccount } from 'wagmi';
 import { CAST_COOLDOWN_MS } from '@/lib/data/constants';
 
@@ -20,51 +20,16 @@ export function useCastCooldown() {
     lastCastTime: null,
   });
   const [loading, setLoading] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    if (!isConnected || !address) {
-      setCooldown({
-        canCast: true,
-        remainingTime: 0,
-        canCastAt: null,
-        lastCastTime: null,
-      });
-      return;
-    }
-
-    checkCooldown();
-
-    // Set up interval to update cooldown every second
-    const interval = setInterval(() => {
-      if (cooldown.canCastAt) {
-        const now = new Date();
-        const remaining = cooldown.canCastAt.getTime() - now.getTime();
-
-        if (remaining <= 0) {
-          setCooldown((prev) => ({
-            ...prev,
-            canCast: true,
-            remainingTime: 0,
-          }));
-        } else {
-          setCooldown((prev) => ({
-            ...prev,
-            remainingTime: remaining,
-          }));
-        }
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [address, isConnected, cooldown.canCastAt]);
-
+  // Check cooldown from API
   const checkCooldown = async () => {
     if (!address) return;
 
     setLoading(true);
 
     try {
-      const response = await fetch(`/api/cast/cooldown?address=${address}`);
+      const response = await fetch(`/api/cast?address=${address}`);
 
       if (response.ok) {
         const data = await response.json();
@@ -81,6 +46,58 @@ export function useCastCooldown() {
       setLoading(false);
     }
   };
+
+  // Initial check when address changes
+  useEffect(() => {
+    if (!isConnected || !address) {
+      setCooldown({
+        canCast: true,
+        remainingTime: 0,
+        canCastAt: null,
+        lastCastTime: null,
+      });
+      return;
+    }
+
+    checkCooldown();
+  }, [address, isConnected]);
+
+  // Update remaining time every second
+  useEffect(() => {
+    // Clear any existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    if (cooldown.canCastAt && !cooldown.canCast) {
+      intervalRef.current = setInterval(() => {
+        const now = new Date();
+        const remaining = cooldown.canCastAt!.getTime() - now.getTime();
+
+        if (remaining <= 0) {
+          setCooldown((prev) => ({
+            ...prev,
+            canCast: true,
+            remainingTime: 0,
+          }));
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+          }
+        } else {
+          setCooldown((prev) => ({
+            ...prev,
+            remainingTime: remaining,
+          }));
+        }
+      }, 1000);
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [cooldown.canCastAt, cooldown.canCast]);
 
   const formatTime = (ms: number): string => {
     const totalSeconds = Math.floor(ms / 1000);

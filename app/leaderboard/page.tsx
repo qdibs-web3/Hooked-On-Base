@@ -49,7 +49,7 @@ export default function LeaderboardPage() {
     <div className="min-h-screen pb-24 md:pb-0">
       <Navigation />
       
-      <div className="max-w-6xl mx-auto p-6 space-y-8">
+      <div className="max-w-6xl mx-auto p-6 space-y-6">
         {/* Header */}
         <div className="flex justify-between items-center flex-wrap gap-4">
           <motion.h1
@@ -62,49 +62,47 @@ export default function LeaderboardPage() {
           {isConnected && <ConnectButton />}
         </div>
 
-        {/* Sort Options */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl p-4 shadow-lg"
-        >
-          <p className="text-sm text-gray-600 mb-3">Sort by:</p>
-          <div className="flex gap-3 flex-wrap">
-            {[
-              { value: 'xp', label: 'Total XP' },
-              { value: 'level', label: 'Level' },
-              { value: 'totalFishCaught', label: 'Fish Caught' },
-            ].map((option) => (
-              <motion.button
-                key={option.value}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  setSortBy(option.value as typeof sortBy);
-                  setPage(1);
-                }}
-                className={`
-                  px-6 py-2 rounded-lg font-bold transition-all
-                  ${
-                    sortBy === option.value
-                      ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }
-                `}
-              >
-                {option.label}
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Leaderboard Table */}
+        {/* Leaderboard Table with Integrated Filters */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className="bg-white rounded-2xl shadow-lg overflow-hidden"
         >
+          {/* Filter Buttons Integrated at Top */}
+          <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-4">
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <p className="text-white font-semibold text-sm">Sort by:</p>
+              <div className="flex gap-2 flex-wrap">
+                {[
+                  { value: 'xp', label: 'Total XP' },
+                  { value: 'level', label: 'Level' },
+                  { value: 'totalFishCaught', label: 'Fish Caught' },
+                ].map((option) => (
+                  <motion.button
+                    key={option.value}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => {
+                      setSortBy(option.value as typeof sortBy);
+                      setPage(1);
+                    }}
+                    className={`
+                      px-4 py-2 rounded-lg font-bold transition-all text-sm
+                      ${
+                        sortBy === option.value
+                          ? 'bg-white text-blue-600 shadow-md'
+                          : 'bg-blue-400/30 text-white hover:bg-blue-400/50'
+                      }
+                    `}
+                  >
+                    {option.label}
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {loading ? (
             <div className="flex items-center justify-center py-20">
               <motion.div
@@ -123,14 +121,14 @@ export default function LeaderboardPage() {
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white">
+                <thead className="bg-gray-50 border-b-2 border-gray-200">
                   <tr>
-                    <th className="px-6 py-4 text-left font-bold">Rank</th>
-                    <th className="px-6 py-4 text-left font-bold">Player</th>
-                    <th className="px-6 py-4 text-center font-bold">Level</th>
-                    <th className="px-6 py-4 text-center font-bold">XP</th>
-                    <th className="px-6 py-4 text-center font-bold">Fish Caught</th>
-                    <th className="px-6 py-4 text-center font-bold">Unique</th>
+                    <th className="px-6 py-4 text-left font-bold text-gray-700">Rank</th>
+                    <th className="px-6 py-4 text-left font-bold text-gray-700">Player</th>
+                    <th className="px-6 py-4 text-center font-bold text-gray-700">Level</th>
+                    <th className="px-6 py-4 text-center font-bold text-gray-700">XP</th>
+                    <th className="px-6 py-4 text-center font-bold text-gray-700">Fish Caught</th>
+                    <th className="px-6 py-4 text-center font-bold text-gray-700">Unique</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -180,7 +178,7 @@ export default function LeaderboardPage() {
                           {formatNumber(entry.totalFishCaught)}
                         </td>
                         <td className="px-6 py-4 text-center font-bold text-green-600">
-                          {entry.uniqueFishCaught}/20
+                          {entry.uniqueFishCaught}/69
                         </td>
                       </motion.tr>
                     );
@@ -232,7 +230,7 @@ export default function LeaderboardPage() {
           className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-2xl p-6 shadow-lg"
         >
           <h2 className="text-2xl font-bold mb-2">
-             Compete for Glory!
+            🏆 Compete for Glory!
           </h2>
           <p>
             Catch more fish, earn more XP, and climb the leaderboard to prove you're the ultimate angler!

@@ -9,14 +9,14 @@ const navItems = [
   { href: '/play', label: 'Play', icon: '🎣' },
   { href: '/shop', label: 'Shop', icon: '🏪' },
   { href: '/leaderboard', label: 'Leaderboard', icon: '🏆' },
-  { href: '/settings', label: 'Settings', icon: '⚙️' },
+  { href: '/settings', label: 'Account', icon: '👤' },
 ];
 
 export function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-blue border-t-4 border-gray-200 shadow-lg z-50 md:relative md:border-t-0 md:border-b-4 md:mb-6">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t-4 border-gray-200 shadow-lg z-50 md:relative md:border-t-0 md:border-b-4 md:mb-6">
       <div className="flex justify-around items-center max-w-4xl mx-auto">
         {navItems.map((item) => {
           const isActive = pathname === item.href;

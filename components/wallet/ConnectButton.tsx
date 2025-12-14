@@ -15,7 +15,7 @@ export function ConnectButton() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => disconnect()}
-        className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all"
+        className="px-6 py-3 bg-white text-red-600 border-2 border-red-600 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all"
       >
         {truncateAddress(address)}
       </motion.button>
@@ -30,7 +30,7 @@ export function ConnectButton() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => connect({ connector })}
-          className="px-6 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all"
+          className="px-6 py-4 bg-white text-blue-600 border-2 border-blue-600 font-bold rounded-xl shadow-lg hover:shadow-xl transition-all hover:bg-blue-50"
         >
           Connect with {connector.name}
         </motion.button>

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useUserProfile } from '@/lib/hooks/useUserProfile';
 import { ConnectButton } from '@/components/wallet/ConnectButton';
 import { Navigation } from '@/components/layout/Navigation';
-import { FISHING_RODS } from '@/lib/data/rods';
+import { FISHING_RODS, ROD_VFX_BY_TIER } from '@/lib/data/rods';
 import { formatHook } from '@/lib/data/constants';
 
 export default function ShopPage() {
@@ -167,6 +167,7 @@ export default function ShopPage() {
             const equipped = user.currentRodId === rod.id;
             const canAfford = user.hookBalance >= rod.price;
             const levelLocked = user.level < rod.unlockLevel;
+            const vfx = ROD_VFX_BY_TIER[rod.tier];
 
             return (
               <motion.div
@@ -176,17 +177,52 @@ export default function ShopPage() {
                 transition={{ delay: index * 0.05 }}
                 whileHover={{ scale: 1.02 }}
                 className={`
-                  bg-white rounded-2xl p-6 shadow-lg border-4 transition-all
+                  bg-white rounded-2xl p-6 shadow-lg border-4 transition-all relative overflow-hidden
                   ${equipped ? 'border-green-500' : 'border-transparent'}
                   ${levelLocked ? 'opacity-60' : ''}
                 `}
+                style={{
+                  boxShadow: owned && vfx && vfx.glowIntensity > 0 
+                    ? `0 0 ${vfx.glowIntensity * 30}px ${rod.color}80, 0 4px 6px rgba(0,0,0,0.1)` 
+                    : undefined
+                }}
               >
+                {/* VFX Glow Background */}
+                {owned && vfx && vfx.glowIntensity > 0 && (
+                  <motion.div
+                    className="absolute inset-0 pointer-events-none"
+                    animate={{
+                      opacity: [0.2, 0.4, 0.2],
+                    }}
+                    transition={{
+                      duration: 2 + vfx.glowIntensity,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    }}
+                    style={{
+                      background: `radial-gradient(circle at 50% 30%, ${rod.color}30 0%, transparent 70%)`,
+                    }}
+                  />
+                )}
+
                 {/* Rod Icon */}
-                <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center text-3xl mb-4 mx-auto"
-                  style={{ backgroundColor: rod.color + '20' }}
-                >
-                  🎣
+                <div className="relative">
+                  <div
+                    className="w-16 h-16 rounded-full flex items-center justify-center text-3xl mb-4 mx-auto relative z-10"
+                    style={{ backgroundColor: rod.color + '20' }}
+                  >
+                    🎣
+                  </div>
+                  
+                  {/* VFX Trail Type Badge */}
+                  {owned && vfx && vfx.trailType !== 'none' && (
+                    <div className="absolute -top-1 -right-1 text-xl z-20">
+                      {vfx.trailType === 'water' && '💧'}
+                      {vfx.trailType === 'light' && '✨'}
+                      {vfx.trailType === 'divine' && '⭐'}
+                      {vfx.trailType === 'void' && '🌑'}
+                    </div>
+                  )}
                 </div>
 
                 {/* Rod Info */}

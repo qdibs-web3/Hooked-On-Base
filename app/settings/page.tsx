@@ -5,14 +5,13 @@ import { motion } from 'framer-motion';
 import { useUserProfile } from '@/lib/hooks/useUserProfile';
 import { ConnectButton } from '@/components/wallet/ConnectButton';
 import { Navigation } from '@/components/layout/Navigation';
-import { TokenomicsInfo } from '@/components/ui/TokenomicsInfo';
+import { Footer } from '@/components/layout/Footer';
 import { MAX_DISPLAY_NAME_LENGTH } from '@/lib/data/constants';
 
 export default function SettingsPage() {
   const { user, loading, isConnected, updateUser } = useUserProfile();
   const [displayName, setDisplayName] = useState('');
   const [saving, setSaving] = useState(false);
-  const [showTokenomics, setShowTokenomics] = useState(false);
 
   const handleSave = async () => {
     if (!displayName.trim() || !user) return;
@@ -39,10 +38,10 @@ export default function SettingsPage() {
           className="text-center space-y-8 max-w-md"
         >
           <h1 className="text-4xl font-bold text-gray-800">
-            Settings
+            Account
           </h1>
           <p className="text-gray-600">
-            Connect your wallet to access settings!
+            Connect your wallet to access your account!
           </p>
           <ConnectButton />
         </motion.div>
@@ -65,10 +64,10 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen pb-24 md:pb-0">
+    <div className="min-h-screen pb-24 md:pb-0 flex flex-col">
       <Navigation />
       
-      <div className="max-w-4xl mx-auto p-6 space-y-8">
+      <div className="max-w-4xl mx-auto p-6 space-y-6 flex-grow">
         {/* Header */}
         <div className="flex justify-between items-center flex-wrap gap-4">
           <motion.h1
@@ -76,7 +75,7 @@ export default function SettingsPage() {
             animate={{ opacity: 1, x: 0 }}
             className="text-4xl font-bold text-gray-800"
           >
-            Settings
+            Account
           </motion.h1>
           <ConnectButton />
         </div>
@@ -153,7 +152,7 @@ export default function SettingsPage() {
           className="bg-white rounded-2xl p-6 shadow-lg"
         >
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            Account Statistics
+            📊 Account Statistics
           </h2>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -188,57 +187,39 @@ export default function SettingsPage() {
             <div className="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg p-4">
               <p className="text-sm text-gray-600">Collection</p>
               <p className="text-2xl font-bold text-red-700">
-                {user.uniqueFishCaught.length}/20
+                {user.uniqueFishCaught.length}/69
               </p>
             </div>
 
             <div className="bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg p-4">
               <p className="text-sm text-gray-600">Rods Owned</p>
               <p className="text-2xl font-bold text-indigo-700">
-                {user.ownedRods.length}/9
+                {user.ownedRods.length}/20
               </p>
             </div>
           </div>
         </motion.div>
 
-        {/* Tokenomics Toggle */}
+        {/* Game Tips */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-        >
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => setShowTokenomics(!showTokenomics)}
-            className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg text-white font-bold py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all"
-          >
-            {showTokenomics ? '▼ Hide' : '▶'} $HOOK Tokenomics & Roadmap
-          </motion.button>
-        </motion.div>
-
-        {/* Tokenomics Info */}
-        {showTokenomics && <TokenomicsInfo />}
-
-        {/* About */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
           className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-2xl p-6 shadow-lg"
         >
-          <h2 className="text-2xl font-bold mb-2">
-            About Hooked
+          <h2 className="text-2xl font-bold mb-3">
+            💡 Pro Tips
           </h2>
-          <p className="mb-4">
-            Hooked is a Web3 fishing game built on Base. Cast your line, catch rare fish, 
-            earn $HOOK tokens, and compete on the leaderboard!
-          </p>
-          <p className="text-sm opacity-90">
-            Version 1.0.0 • Built for Base Mini App Community
-          </p>
+          <div className="space-y-2 text-white/90">
+            <p>• Cast regularly to maximize your XP and $HOOK earnings</p>
+            <p>• Upgrade your fishing rod to catch rarer fish</p>
+            <p>• Check the leaderboard to see how you rank against other anglers</p>
+            <p>• Complete your fish collection to become a master angler</p>
+          </div>
         </motion.div>
       </div>
+
+      <Footer />
     </div>
   );
 }
