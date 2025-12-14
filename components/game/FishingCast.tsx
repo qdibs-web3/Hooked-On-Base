@@ -320,7 +320,7 @@ export function FishingCast({ onCastComplete }: FishingCastProps) {
               <div className="text-center space-y-4">
                 <div className="text-6xl">😔</div>
                 <h3 className="text-2xl font-bold text-gray-800">
-                  Nothing Caught
+                  Nothing Caught!
                 </h3>
                 <p className="text-gray-600">{result.message}</p>
               </div>
